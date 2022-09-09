@@ -41,11 +41,11 @@ const clickHandler = (event) => {
 
 const add = (value) => (document.querySelector(".input").value += value);
 const calc = () =>
-  (document.querySelector(".input").value = eval(
+  (document.querySelector(".input").value = parseFloat(eval(
     document
       .querySelector(".input")
       .value.replaceAll("×", "*")
       .replaceAll("÷", "/")
-  ));
+  ).toFixed(6)));
 
 document.querySelector("#root").addEventListener("click", clickHandler);
