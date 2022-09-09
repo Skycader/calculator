@@ -25,7 +25,7 @@ const clickHandler = (event) => {
     default:
         let error = 0
         let symcopy = sym.replaceAll("×", "*").replaceAll("÷", "/")
-        let copy = document.querySelector(".input").value.replaceAll("×", "*").replaceAll("÷", "/")
+        let copy = document.querySelector(".input").value.replaceAll("×", "*").replaceAll("÷", "/").replaceAll("(","").replaceAll(")","")
         let expr = copy+=symcopy+"1"
        
         try {
