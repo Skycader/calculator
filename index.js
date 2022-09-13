@@ -4,14 +4,24 @@ function parse(str) {
 
 const clickHandler = (event) => {
   let sym = event.target.innerHTML;
-  let data = document.querySelector(".input").value
+  let data = document.querySelector(".input").value;
+  let num = Number(data[data.length - 1]);
   switch (sym) {
-    case '0':
-      let num = Number(data[data.length-1])
-      if ((num != 0)&&(!isNaN(num))) {
-        add(sym)
+    case "0":
+      if (num != 0 && !isNaN(num)) {
+        add(sym);
       }
-      break
+      break;
+    case "-":
+      add(sym);
+      break;
+    case "+":
+    case "×":
+    case "÷":
+      if (!data[data.length - 1]?.match(/[+|÷|×]/) && num != 0 && !isNaN(num)) {
+        add(sym);
+      }
+      break;
     case "=":
       if (document.querySelector(".input").value) calc();
       break;
@@ -24,40 +34,49 @@ const clickHandler = (event) => {
         .value.slice(0, -1);
       break;
     case "()":
-     
-      if ((data[data.length - 1]?.match(/[+|\-|÷|×]/))||(data.length==0)) {
+      if (data[data.length - 1]?.match(/[+|\-|÷|×]/) || data.length == 0) {
         add("(");
       } else {
-        if ((data.includes("("))&&(data.match(/[(]/g).length > (data.match(/[\)]/g)||[]).length)) {
-        add(")");
+        if (
+          data.includes("(") &&
+          data.match(/[(]/g).length > (data.match(/[\)]/g) || []).length
+        ) {
+          add(")");
         }
       }
       break;
     default:
-        let error = 0
-        let symcopy = sym.replaceAll("×", "*").replaceAll("÷", "/")
-        let copy = document.querySelector(".input").value.replaceAll("×", "*").replaceAll("÷", "/").replaceAll("(","").replaceAll(")","")
-        let expr = copy+=symcopy+"1"
-       
-        try {
-            eval(expr)
-        } catch(e) {
-            error=1
-        }
-        if ((data.length == 0)&&(sym == '0')) error=1
-        if (!error) {
-            add(sym)
-        }
+      let error = 0;
+      let symcopy = sym.replaceAll("×", "*").replaceAll("÷", "/");
+      let copy = document
+        .querySelector(".input")
+        .value.replaceAll("×", "*")
+        .replaceAll("÷", "/")
+        .replaceAll("(", "")
+        .replaceAll(")", "");
+      let expr = (copy += symcopy + "1");
+
+      try {
+        eval(expr);
+      } catch (e) {
+        error = 1;
+      }
+      if (data.length == 0 && sym == "0") error = 1;
+      if (!error) {
+        add(sym);
+      }
   }
 };
 
 const add = (value) => (document.querySelector(".input").value += value);
 const calc = () =>
-  (document.querySelector(".input").value = parseFloat(parse(
-    document
-      .querySelector(".input")
-      .value.replaceAll("×", "*")
-      .replaceAll("÷", "/")
-  ).toFixed(6)));
+  (document.querySelector(".input").value = parseFloat(
+    parse(
+      document
+        .querySelector(".input")
+        .value.replaceAll("×", "*")
+        .replaceAll("÷", "/")
+    ).toFixed(6)
+  ));
 
 document.querySelector("#root").addEventListener("click", clickHandler);
