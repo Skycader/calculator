@@ -1,6 +1,17 @@
+function parse(str) {
+  return new Function("", `return ${str}`)();
+}
+
 const clickHandler = (event) => {
   let sym = event.target.innerHTML;
+  let data = document.querySelector(".input").value
   switch (sym) {
+    case '0':
+      let num = Number(data[data.length-1])
+      if ((num != 0)&&(!isNaN(num))) {
+        add(sym)
+      }
+      break
     case "=":
       if (document.querySelector(".input").value) calc();
       break;
@@ -13,11 +24,11 @@ const clickHandler = (event) => {
         .value.slice(0, -1);
       break;
     case "()":
-      let data = document.querySelector(".input").value
-      if (data[data.length - 1].match(/[+|\-|÷|×]/)) {
+     
+      if ((data[data.length - 1]?.match(/[+|\-|÷|×]/))||(data.length==0)) {
         add("(");
       } else {
-        if ((data.includes("("))&&(data.match(/[(]/g).length == (data.match(/[\)]/g)||[]).length+1)) {
+        if ((data.includes("("))&&(data.match(/[(]/g).length > (data.match(/[\)]/g)||[]).length)) {
         add(")");
         }
       }
@@ -33,6 +44,7 @@ const clickHandler = (event) => {
         } catch(e) {
             error=1
         }
+        if ((data.length == 0)&&(sym == '0')) error=1
         if (!error) {
             add(sym)
         }
@@ -41,7 +53,7 @@ const clickHandler = (event) => {
 
 const add = (value) => (document.querySelector(".input").value += value);
 const calc = () =>
-  (document.querySelector(".input").value = parseFloat(eval(
+  (document.querySelector(".input").value = parseFloat(parse(
     document
       .querySelector(".input")
       .value.replaceAll("×", "*")
