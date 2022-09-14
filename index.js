@@ -18,7 +18,7 @@ const clickHandler = (event) => {
     case "+":
     case "×":
     case "÷":
-      if (!data[data.length - 1]?.match(/[+|÷|×]/) && !isNaN(num)) {
+      if (!data[data.length - 1]?.match(/[+|÷|×]/)) {
         add(sym);
       }
       break;
