@@ -13,6 +13,7 @@ body {
     border-radius: 25px;
     background: rgb(54, 54, 54);
     padding: 10px;
+    box-shadow: 10px 5px 5px dark;
 }
 .input {
     width: 100%;

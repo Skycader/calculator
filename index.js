@@ -8,7 +8,7 @@ const clickHandler = (event) => {
   let num = Number(data[data.length - 1]);
   switch (sym) {
     case "0":
-      if (num != 0 && !isNaN(num)) {
+      if (data[data.length-1] != '0') {
         add(sym);
       }
       break;
