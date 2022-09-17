@@ -13,12 +13,10 @@ const clickHandler = (event) => {
       }
       break;
     case "-":
-      add(sym);
-      break;
     case "+":
     case "×":
     case "÷":
-      if (!data[data.length - 1]?.match(/[+|÷|×]/)) {
+      if (!data[data.length - 1]?.match(/[+|\-|÷|×]/)) {
         add(sym);
       }
       break;
