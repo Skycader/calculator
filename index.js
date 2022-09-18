@@ -2,6 +2,16 @@ function parse(str) {
   return new Function("", `return ${str}`)();
 }
 
+const $myInput = document.querySelector('input')
+
+    $myInput.onkeydown = function(event){
+        if(event.key === 'Enter') {
+          document.querySelector('input').value = 
+           calc()    
+        }
+    }
+
+
 const clickHandler = (event) => {
   let sym = event.target.innerHTML;
   let data = document.querySelector(".input").value;
